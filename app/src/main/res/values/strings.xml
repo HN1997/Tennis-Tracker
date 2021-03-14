@@ -6,6 +6,11 @@
     <string name="cdTennisBackground">Tennis Background</string>
     <string name="txtCreateMatch">Nouveau Match</string>
     <string name="txtHistorique">Historique</string>
-    <string name="nouveau_matchTxt">Nouveau Match</string>
     <string name="historiqueTxt">Historique</string>
+    <string name="nouveau_matchTxt">Nouveau Match</string>
+    <string name="iconplayer">IconPlayer</string>
+    <string name="nom_du_joueur1">Nom du Joueur1</string>
+    <string name="nom_du_joueur2">Nom du Joueur2</string>
+    <string name="nameJoueur1">Name</string>
+    <string name="demarrerTxt">Démarrer</string>
 </resources>
