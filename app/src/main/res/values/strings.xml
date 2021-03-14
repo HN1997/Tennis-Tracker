@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Tennis Tracker</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tvTennisTracker">Tennis Tracker</string>
+    <string name="cdTennisBackground">Tennis Background</string>
+    <string name="txtCreateMatch">Nouveau Match</string>
+    <string name="txtHistorique">Historique</string>
+    <string name="nouveau_matchTxt">Nouveau Match</string>
+    <string name="historiqueTxt">Historique</string>
 </resources>
