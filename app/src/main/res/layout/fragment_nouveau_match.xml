@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NouveauMatch"
-    android:background="#E47B35"
-    android:orientation="vertical">
+    android:background="#E47B35">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/nouveauMatchTxt"
@@ -18,102 +22,105 @@
             android:textStyle="bold"
             android:textAlignment="center"
             android:gravity="center_horizontal"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/usericon"
-            android:contentDescription="@string/iconplayer" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"/>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textJoueur1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/nom_du_joueur1"
-                android:textColor="#FFFFFF" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/usericon"
+                android:contentDescription="@string/iconplayer" />
 
-            <EditText
-                android:id="@+id/Personne1Txt"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/nameJoueur1"
-                android:textColor="#FFFFFF"
-                android:autofillHints=""
-                tools:ignore="LabelFor"
-                />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textJoueur1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nom_du_joueur1"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/Personne1Txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="@string/nameJoueur1"
+                    android:textColor="#FFFFFF"
+                    android:autofillHints=""
+                    tools:ignore="LabelFor"
+                    />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/usericon"
-            android:contentDescription="@string/iconplayer" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textJoueur2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/nom_du_joueur2"
-                android:textColor="#FFFFFF" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/usericon"
+                android:contentDescription="@string/iconplayer" />
 
-            <EditText
-                android:id="@+id/Personne2Txt"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/nameJoueur1"
-                android:textColor="#FFFFFF"
-                android:autofillHints=""
-                tools:ignore="LabelFor"
-                />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textJoueur2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nom_du_joueur2"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/Personne2Txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="@string/nameJoueur1"
+                    android:textColor="#FFFFFF"
+                    android:autofillHints=""
+                    tools:ignore="LabelFor"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonDemarrer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/demarrerTxt"
+            app:backgroundTint="#CA9898" />
+
+        <Button
+            android:id="@+id/buttonRetour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/retour"
+            app:backgroundTint="#CA9898" />
+
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonDemarrer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/demarrerTxt"
-        app:backgroundTint="#CA9898" />
-
-    <Button
-        android:id="@+id/buttonRetour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Retour"
-        app:backgroundTint="#CA9898" />
-
-</LinearLayout>
+</FrameLayout>
