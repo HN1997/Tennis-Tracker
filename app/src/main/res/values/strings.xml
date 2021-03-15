@@ -11,6 +11,12 @@
     <string name="iconplayer">IconPlayer</string>
     <string name="nom_du_joueur1">Nom du Joueur1</string>
     <string name="nom_du_joueur2">Nom du Joueur2</string>
-    <string name="nameJoueur1">Name</string>
     <string name="demarrerTxt">Démarrer</string>
+    <string name="retour">Retour</string>
+    <string name="nameJoueur1">Joueur 1</string>
+    <string name="nameJoueur2">Joueur 2</string>
+    <string name="premier_joueur_servir">Premier joueur à servir :</string>
+    <string name="joueur_1">Joueur 1</string>
+    <string name="joueur_2">Joueur 2</string>
+    <string name="enregistrement">Enregistrement</string>
 </resources>
