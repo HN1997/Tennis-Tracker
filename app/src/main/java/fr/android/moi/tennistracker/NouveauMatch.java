@@ -1,5 +1,6 @@
 package fr.android.moi.tennistracker;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 public class NouveauMatch extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -25,7 +27,6 @@ public class NouveauMatch extends Fragment {
         EditText joueur1et = view.findViewById(R.id.Personne1Txt);
         EditText joueur2et = view.findViewById(R.id.Personne2Txt);
         RadioButton rbJoueur1 = view.findViewById(R.id.rbJ1);
-        RadioButton rbJoueur2 = view.findViewById(R.id.rbJ2);
 
         //Clic sur le boutton retour, revient au fragment Main Page
         retourButton.setOnClickListener(new View.OnClickListener() {
@@ -41,12 +42,19 @@ public class NouveauMatch extends Fragment {
         demarrerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("tag", "Joueur 1 : " + joueur1et.getText() + ", Joueur 2 : " + joueur2et.getText() + (rbJoueur1.isChecked() ? joueur1et.getText() + "sert" : joueur2et.getText() + "sert"));
+                Bundle bundle = new Bundle();
+                bundle.putString("j1Text", joueur1et.getText().toString());
+                bundle.putString("j2Text", joueur2et.getText().toString());
+                bundle.putBoolean("player1Serving", rbJoueur1.isChecked());
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Enregistrement());
+                Enregistrement enregistrement = new Enregistrement();
+                enregistrement.setArguments(bundle);
+                fr.replace(R.id.fragment_container, enregistrement);
                 fr.commit();
             }
         });
         return view;
     }
+
+
 }
