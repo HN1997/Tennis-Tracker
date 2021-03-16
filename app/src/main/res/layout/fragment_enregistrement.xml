@@ -97,11 +97,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Serveur : "
-        android:textSize="25sp"
-        android:textColor="@color/black"
         android:paddingTop="10dp"
-        >
+        android:text="Serveur : Joueur X"
+        android:textColor="@color/black"
+        android:textSize="25sp">
 
     </TextView>
 
@@ -109,5 +108,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/black"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
