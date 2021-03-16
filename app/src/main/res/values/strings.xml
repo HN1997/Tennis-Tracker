@@ -32,4 +32,6 @@
     <string name="fauteProvoquéeJ2">Faute Provoquée</string>
     <string name="fauteDirecteJ1">Faute Directe</string>
     <string name="fauteDirecteJ2">Faute Directe</string>
+    <string name="score">Score</string>
+    <string name="serveur_joueur_x">Serveur : Joueur X</string>
 </resources>
