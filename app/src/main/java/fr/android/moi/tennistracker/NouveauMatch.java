@@ -42,6 +42,9 @@ public class NouveauMatch extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i("tag", "Joueur 1 : " + joueur1et.getText() + ", Joueur 2 : " + joueur2et.getText() + (rbJoueur1.isChecked() ? joueur1et.getText() + "sert" : joueur2et.getText() + "sert"));
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_container, new Enregistrement());
+                fr.commit();
             }
         });
         return view;
