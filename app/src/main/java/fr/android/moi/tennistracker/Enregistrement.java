@@ -1,5 +1,6 @@
 package fr.android.moi.tennistracker;
 
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -21,6 +22,33 @@ import java.io.Console;
 public class Enregistrement extends Fragment {
     TextView joueur1Name;
     TextView joueur2Name;
+    boolean premiereOkButtonClicked = false; //Si le boutton 1ere ok est cliqué
+    boolean deuxiemeOkButtonClicked = false; //Si le boutton 2eme ok est cliqué
+    boolean joueur1isServing;
+
+    //Statistiques J1 //
+
+    int pointActuelIntJ1; //Le nombre de point actuel
+    int nbr1ereOkJ1; //Quand il sert bien la premiere fois
+    int nbr2emeOkJ1; //Quand il sert bien la deuxieme fois
+    int nbr1AceJ1; //Ace au premier service
+    int nbr2AceJ1; //Ace au deuxieme service
+    int nbrDoubleFauteJ1; //Nombre de double faute
+    int nbrPointGagnantJ1; //Il a remporté le point
+    int nbrFauteProvoqueeJ1; //Il n'a pas remporté le point et a fait une faute provoquée
+    int nbrFauteDirectJ1; //Il n'a pas remporté le point et a fait une faute directe
+
+    //Statistiques J2 //
+
+    int pointActuelIntJ2; //Le nombre de point actuel
+    int nbr1ereOkJ2; //Quand il sert bien la premiere fois
+    int nbr2emeOkJ2; //Quand il sert bien la deuxieme fois
+    int nbr1AceJ2; //Ace au premier service
+    int nbr2AceJ2; //Ace au deuxieme service
+    int nbrDoubleFauteJ2; //Nombre de double faute
+    int nbrPointGagnantJ2; //Il a remporté le point
+    int nbrFauteProvoqueeJ2; //Il n'a pas remporté le point et a fait une faute provoquée
+    int nbrFauteDirectJ2; //Il n'a pas remporté le point et a fait une faute directe
 
     @Nullable
     @Override
@@ -59,7 +87,9 @@ public class Enregistrement extends Fragment {
         //Changing name player1, nameplayer2, person who serves first with the bundle
         joueur1Name.setText(bundle.getString("j1Text"));
         joueur2Name.setText(bundle.getString("j2Text"));
-        if(bundle.getBoolean("player1Serving"))
+        joueur1isServing=bundle.getBoolean("player1Serving");
+
+        if(joueur1isServing)
         {
             joueur1Name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tennis_ball, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
             serveurTitle.setText("Serveur : " + joueur1Name.getText());
@@ -69,11 +99,23 @@ public class Enregistrement extends Fragment {
             serveurTitle.setText("Serveur : " + joueur2Name.getText());
         }
 
-        //Button ace 1
-        ace1.setOnClickListener(new View.OnClickListener() {
+        premiereOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pointActuelJ1.setText("15");
+                premiereOK.setBackgroundColor(Color.rgb(75,105,6)); //On change la couleur du boutton 1ere ok (couleur enfoncée)
+                deuxiemeOK.setBackgroundColor(Color.rgb(255,217,17)); //On change la couleur du boutton 2eme ok (couleur relachée = par défaut)
+                premiereOkButtonClicked = true; //le boutton 1ere ok est cliqué
+                deuxiemeOkButtonClicked = false;//le boutton 1ere ok est cliqué
+            }
+        });
+
+        deuxiemeOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                premiereOK.setBackgroundColor(Color.rgb(125,195,0)); //On change la couleur du boutton 1ere ok (couleur relachée = par défaut)
+                deuxiemeOK.setBackgroundColor(Color.rgb(255,139,15)); //On change la couleur du boutton 2eme ok (couleur relachée = par défaut)
+                premiereOkButtonClicked = false; //le boutton 1ere ok est cliqué
+                deuxiemeOkButtonClicked = true;//le boutton 1ere ok est cliqué
             }
         });
 
