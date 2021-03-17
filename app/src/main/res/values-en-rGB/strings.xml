@@ -31,4 +31,7 @@
     <string name="score">Score</string>
     <string name="serveur_joueur_x">Server : Player X</string>
     <string name="Echange">Exchange</string>
+    <string name="enregistrer_et_quitter">Save and Exit</string>
+    <string name="recuperer_position">Position</string>
+    <string name="prendre_une_photo">Photo</string>
 </resources>
