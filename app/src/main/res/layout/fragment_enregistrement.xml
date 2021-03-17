@@ -84,6 +84,13 @@
                 android:layout_weight="1"
                 android:text="-"
                 android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/set3J1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-"
+                android:textColor="@color/black"/>
         </TableRow>
 
         <TableRow
@@ -116,6 +123,14 @@
 
             <TextView
                 android:id="@+id/set2J2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/set3J2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
