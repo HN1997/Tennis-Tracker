@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">Tennis Tracker</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tvTennisTracker">Tennis Tracker</string>
-    <string name="cdTennisBackground">Tennis Background</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="tvTennisTracker" translatable="false">Tennis Tracker</string>
+    <string name="cdTennisBackground" translatable="false">Tennis Background</string>
     <string name="txtCreateMatch">Nouveau Match</string>
     <string name="txtHistorique">Historique</string>
     <string name="historiqueTxt">Historique</string>
     <string name="nouveau_matchTxt">Nouveau Match</string>
-    <string name="iconplayer">IconPlayer</string>
+    <string name="iconplayer" translatable="false">IconPlayer</string>
     <string name="nom_du_joueur1">Nom du Joueur1</string>
     <string name="nom_du_joueur2">Nom du Joueur2</string>
     <string name="demarrerTxt">Démarrer</string>
@@ -34,4 +34,5 @@
     <string name="fauteDirecteJ2">Faute Directe</string>
     <string name="score">Score</string>
     <string name="serveur_joueur_x">Serveur : Joueur X</string>
+    <string name="Echange">Echange</string>
 </resources>

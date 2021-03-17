@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tennis Tracker</string>
+    <string name="txtCreateMatch">New Match</string>
+    <string name="txtHistorique">Histor</string>
+    <string name="historiqueTxt">History</string>
+    <string name="nouveau_matchTxt">New Match</string>
+    <string name="nom_du_joueur1">Name of Player1</string>
+    <string name="nom_du_joueur2">Name of Player2</string>
+    <string name="demarrerTxt">Start</string>
+    <string name="retour">Cancel</string>
+    <string name="nameJoueur1">Player 1</string>
+    <string name="nameJoueur2">Player 2</string>
+    <string name="premier_joueur_servir">First player to serve</string>
+    <string name="joueur_1">Player 1</string>
+    <string name="joueur_2">Player 2</string>
+    <string name="enregistrement">Record</string>
+    <string name="premiereOK">1st OK</string>
+    <string name="deuxiemeOK">2nd OK</string>
+    <string name="doubleFaute">Double Fault</string>
+    <string name="ace1">Ace</string>
+    <string name="ace2">Ace</string>
+    <string name="scoreJ1">Score P1</string>
+    <string name="scoreJ2">Score P2</string>
+    <string name="pointGagnantJ1">Winning Point</string>
+    <string name="pointGagnantJ2">Winning Point</string>
+    <string name="fauteProvoquéeJ1">Fault</string>
+    <string name="fauteProvoquéeJ2">Fault</string>
+    <string name="fauteDirecteJ1">Direct Fault</string>
+    <string name="fauteDirecteJ2">Direct Fault</string>
+    <string name="score">Score</string>
+    <string name="serveur_joueur_x">Server : Player X</string>
+    <string name="Echange">Exchange</string>
+</resources>
