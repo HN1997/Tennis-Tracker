@@ -1,25 +1,17 @@
 package fr.android.moi.tennistracker;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.Console;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 public class Enregistrement extends Fragment {
     TextView joueur1Name;
@@ -28,6 +20,19 @@ public class Enregistrement extends Fragment {
     boolean deuxiemeOkButtonClicked = false; //Si le boutton 2eme ok est cliqué
     boolean joueur1isServing;
     boolean finDuMatch;
+
+    //Buttons
+    Button premiereOK;
+    Button deuxiemeOK;
+    Button ace1;
+    Button ace2;
+    Button doubleFaute;
+    Button pointGagnantJ1;
+    Button fauteProvoqueeJ1 ;
+    Button fauteDirecteJ1;
+    Button pointGagnantJ2;
+    Button fauteProvoqueeJ2;
+    Button fauteDirecteJ2;
 
     //Statistiques J1 //
 
@@ -106,17 +111,17 @@ public class Enregistrement extends Fragment {
         serveurTitle = view.findViewById(R.id.serveurTitle);
 
         //Buttons
-        Button premiereOK = view.findViewById(R.id.premiereOK);
-        Button deuxiemeOK = view.findViewById(R.id.deuxiemeOK);
-        Button ace1 = view.findViewById(R.id.ace1);
-        Button ace2 = view.findViewById(R.id.ace2);
-        Button doubleFaute = view.findViewById(R.id.doubleFaute);
-        Button pointGagnantJ1 = view.findViewById(R.id.pointGagnantJ1);
-        Button fauteProvoquéeJ1 = view.findViewById(R.id.fauteProvoquéeJ1);
-        Button fauteDirecteJ1 = view.findViewById(R.id.fauteDirecteJ1);
-        Button pointGagnantJ2 = view.findViewById(R.id.pointGagnantJ2);
-        Button fauteProvoquéeJ2 = view.findViewById(R.id.fauteProvoquéeJ2);
-        Button fauteDirecteJ2 = view.findViewById(R.id.fauteDirecteJ2);
+        premiereOK = view.findViewById(R.id.premiereOK);
+        deuxiemeOK = view.findViewById(R.id.deuxiemeOK);
+        ace1 = view.findViewById(R.id.ace1);
+        ace2 = view.findViewById(R.id.ace2);
+        doubleFaute = view.findViewById(R.id.doubleFaute);
+        pointGagnantJ1 = view.findViewById(R.id.pointGagnantJ1);
+        fauteProvoqueeJ1 = view.findViewById(R.id.fauteProvoqueeJ1);
+        fauteDirecteJ1 = view.findViewById(R.id.fauteDirecteJ1);
+        pointGagnantJ2 = view.findViewById(R.id.pointGagnantJ2);
+        fauteProvoqueeJ2 = view.findViewById(R.id.fauteProvoqueeJ2);
+        fauteDirecteJ2 = view.findViewById(R.id.fauteDirecteJ2);
 
         //Changing name player1, nameplayer2, person who serves first with the bundle
         joueur1Name.setText(bundle.getString("j1Text"));
@@ -175,21 +180,116 @@ public class Enregistrement extends Fragment {
             @Override
             public void onClick(View v)
             {
-                ajoutPoint();
+                ajoutPoint(joueur1isServing, true, true);
+            }
+        });
+
+        ace2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                ajoutPoint(joueur1isServing, true, false);
+            }
+        });
+
+        doubleFaute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ajoutPoint(!joueur1isServing, false, false);
+                if(joueur1isServing)
+                    nbrDoubleFauteJ1++;
+                else
+                    nbrDoubleFauteJ2++;
+            }
+        });
+
+        pointGagnantJ1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ajoutPoint(true, false, false);
+                nbrPointGagnantJ1++;
+            }
+        });
+
+        pointGagnantJ2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ajoutPoint(false, false, false);
+                nbrPointGagnantJ2++;
+            }
+        });
+
+        fauteProvoqueeJ1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ajoutPoint(false, false, false);
+                nbrFauteProvoqueeJ1++;
+            }
+        });
+
+        fauteProvoqueeJ2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ajoutPoint(true, false, false);
+                nbrFauteProvoqueeJ2++;
+            }
+        });
+
+        fauteDirecteJ1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ajoutPoint(false, false, false);
+                nbrFauteDirectJ1++;
+            }
+        });
+
+        fauteDirecteJ2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ajoutPoint(true, false, false);
+                nbrFauteDirectJ2++;
             }
         });
 
         return view;
     }
 
-    public void ajoutPoint()
+    public void ajoutPoint(boolean joueur1IsMarking, boolean isAce, boolean aceFirst)
     {
         //Si ce n'est pas la fin du match
         if(!finDuMatch)
         {
-            //Si c'est le joueur 1 qui sert
-            if(joueur1isServing)
+            //Si c'est le joueur 1 qui marque le point
+            if(joueur1IsMarking)
             {
+                //Reinitialisation des couleurs de 1ere OK et 2eme OK
+                deuxiemeOK.setBackgroundColor(Color.rgb(255,217,17)); //On change la couleur du boutton 2eme ok (couleur relachée = par défaut)
+                premiereOK.setBackgroundColor(Color.rgb(125,195,0)); //On change la couleur du boutton 1ere ok (couleur relachée = par défaut)
+
+                //Si le boutton premiere ok est selectionne et que ca ne provient pas d'un ACE
+                if(premiereOkButtonClicked && !isAce && joueur1isServing) // Ce n'est pas un ace, la 1ere est OK et J1 sert
+                {
+                    nbr1ereOkJ1++;
+                    nbrPointGagnantJ1++;
+                }
+                else if(deuxiemeOkButtonClicked && !isAce && joueur1isServing) // Ce n'est pas un ace, la 2eme est OK et J1 sert
+                {
+                    nbr2emeOkJ1++;
+                    nbrPointGagnantJ1++;
+                }
+                else if(isAce && joueur1isServing && aceFirst) //Le jouer 1 sert, fait un ace et c'est son premier service
+                {
+                    nbr1AceJ1++;
+                }
+                else if(isAce && joueur1isServing && !aceFirst) //Le jouer 1 sert, fait un ace et ce n'est pas son premier service
+                {
+                    nbr2AceJ1++;
+                }
+
+                //Reinitialisation de la valeur true/false des bouttons 1ereok et 2eme ok
+                premiereOkButtonClicked = false;
+                deuxiemeOkButtonClicked = false;
+
                 // Si il a 0 point
                 if(pointActuelIntJ1 == 0)
                 {
@@ -232,10 +332,19 @@ public class Enregistrement extends Fragment {
                         pointActuelJ2.setText("0");
 
                         //C'est a l'adversaire de servir
-                        joueur1isServing = false;
-                        joueur1Name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
-                        joueur2Name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tennis_ball, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
-                        serveurTitle.setText("Serveur : " + joueur2Name.getText());
+                        joueur1isServing = !joueur1isServing;
+                        if(joueur1isServing)
+                        {
+                            joueur1Name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tennis_ball, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
+                            joueur2Name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
+                            serveurTitle.setText("Serveur : " + joueur1Name.getText());
+                        }
+                        else
+                        {
+                            joueur1Name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
+                            joueur2Name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tennis_ball, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
+                            serveurTitle.setText("Serveur : " + joueur2Name.getText());
+                        }
 
                         //Si au Set 1 il n'a pas encore 6 points et qu'on est au set 1
                         if(pointSet1J1<6 && currentSetPlaying == 1)
@@ -267,6 +376,7 @@ public class Enregistrement extends Fragment {
                                     finDuMatch = true;
                                     pointActuelJ1.setText("0");
                                     pointActuelJ2.setText("0");
+                                    Toast.makeText(getActivity(), "Winner is : " + joueur1Name.getText() + ", you can save and quit", Toast.LENGTH_LONG).show();
 
                                 }
                                 //Sinon on doit passer au set3
@@ -288,15 +398,44 @@ public class Enregistrement extends Fragment {
                                 finDuMatch = true;
                                 pointActuelJ1.setText("0");
                                 pointActuelJ2.setText("0");
+                                Toast.makeText(getActivity(), "Winner is : " + joueur1Name.getText() + ", you can save and quit", Toast.LENGTH_LONG).show();
                             }
                         }
                     }
                 }
             }
 
-            //Sinon, c'est le joueur 2 qui sert
+            //Sinon, c'est le joueur 2 qui marque
             else
             {
+                //Reinitialisation des couleurs de 1ere OK et 2eme OK
+                deuxiemeOK.setBackgroundColor(Color.rgb(255,217,17)); //On change la couleur du boutton 2eme ok (couleur relachée = par défaut)
+                premiereOK.setBackgroundColor(Color.rgb(125,195,0)); //On change la couleur du boutton 1ere ok (couleur relachée = par défaut)
+
+                //Si le boutton premiere ok est selectionne et que ca ne provient pas d'un ACE
+                if(premiereOkButtonClicked && !isAce && !joueur1isServing) // Ce n'est pas un ace, la 1ere est OK et J2 sert
+                {
+                    nbr1ereOkJ2++;
+                    nbrPointGagnantJ2++;
+                }
+                else if(deuxiemeOkButtonClicked && !isAce && !joueur1isServing) // Ce n'est pas un ace, la 2eme est OK et J2 sert
+                {
+                    nbr2emeOkJ2++;
+                    nbrPointGagnantJ2++;
+                }
+                else if(isAce && !joueur1isServing && aceFirst) //Le jouer 2 sert, fait un ace et c'est son premier service
+                {
+                    nbr1AceJ2++;
+                }
+                else if(isAce && !joueur1isServing && !aceFirst) //Le jouer 2 sert, fait un ace et ce n'est pas son premier service
+                {
+                    nbr2AceJ2++;
+                }
+
+                //Reinitialisation de la valeur true/false des bouttons 1ereok et 2eme ok
+                premiereOkButtonClicked = false;
+                deuxiemeOkButtonClicked = false;
+
                 // Si il a 0 point
                 if(pointActuelIntJ2 == 0)
                 {
@@ -316,8 +455,9 @@ public class Enregistrement extends Fragment {
                     pointActuelJ2.setText("40");
                 }
                 //Si il a 40 points ou 50 points
-                else if(pointActuelIntJ2 == 40 || pointActuelIntJ1 == 50)
+                else if(pointActuelIntJ2 == 40 || pointActuelIntJ2 == 50)
                 {
+
                     //Si les deux joueurs ont 40 points
                     if(pointActuelIntJ1 == 40 && pointActuelIntJ2 == 40)
                     {
@@ -327,10 +467,10 @@ public class Enregistrement extends Fragment {
                     //Si l'adversaire a lui avantage
                     else if(pointActuelIntJ1 == 50 && pointActuelIntJ2 == 40)
                     {
-                        pointActuelIntJ1 = 40; //On decremente le nombre de points de J2
+                        pointActuelIntJ1 = 40; //On decremente le nombre de points de J1
                         pointActuelJ1.setText("40");
                     }
-                    //Sinon, le joueur a remporté le point
+                    //Sinon, le joueur 2 a remporté le point
                     else
                     {
                         //On reinitialise les points
@@ -339,10 +479,19 @@ public class Enregistrement extends Fragment {
                         pointActuelJ1.setText("0");
 
                         //C'est a l'adversaire de servir
-                        joueur1isServing = true;
-                        joueur1Name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tennis_ball, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
-                        joueur2Name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
-                        serveurTitle.setText("Serveur : " + joueur1Name.getText());
+                        joueur1isServing = !joueur1isServing;
+                        if(joueur1isServing)
+                        {
+                            joueur1Name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tennis_ball, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
+                            joueur2Name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
+                            serveurTitle.setText("Serveur : " + joueur1Name.getText());
+                        }
+                        else
+                        {
+                            joueur1Name.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
+                            joueur2Name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tennis_ball, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
+                            serveurTitle.setText("Serveur : " + joueur2Name.getText());
+                        }
 
                         //Si au Set 1 il n'a pas encore 6 points et qu'on est au set 1
                         if(pointSet1J2<6 && currentSetPlaying == 1)
@@ -366,7 +515,7 @@ public class Enregistrement extends Fragment {
                             //Si il a 6 points, il remporte le set
                             if(pointSet2J2 == 6)
                             {
-                                vainqueurSet2 = 1;
+                                vainqueurSet2 = 2;
 
                                 //Si il a remporté le set 1 et 2, il a gagné le match
                                 if(vainqueurSet1 == 2 && vainqueurSet2 == 2)
@@ -374,6 +523,7 @@ public class Enregistrement extends Fragment {
                                     finDuMatch = true;
                                     pointActuelJ2.setText("0");
                                     pointActuelJ1.setText("0");
+                                    Toast.makeText(getActivity(), "Winner is : " + joueur2Name.getText() + ", you can save and quit", Toast.LENGTH_LONG).show();
 
                                 }
                                 //Sinon on doit passer au set3
@@ -395,6 +545,7 @@ public class Enregistrement extends Fragment {
                                 finDuMatch = true;
                                 pointActuelJ1.setText("0");
                                 pointActuelJ2.setText("0");
+                                Toast.makeText(getActivity(), "Winner is : " + joueur2Name.getText() + ", you can save and quit", Toast.LENGTH_LONG).show();
                             }
                         }
                     }
