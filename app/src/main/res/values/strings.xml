@@ -38,4 +38,6 @@
     <string name="enregistrer_et_quitter">Enregistrer et quitter</string>
     <string name="recuperer_position">Recuperer position</string>
     <string name="prendre_une_photo">Prendre une photo</string>
+    <string name="historique">Historique</string>
+    <string name="retour_au_menu">Retour au menu</string>
 </resources>

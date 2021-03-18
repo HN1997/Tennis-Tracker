@@ -21,12 +21,22 @@ public class MainPage extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);
         Button nvMatchButton = (Button)view.findViewById(R.id.btnNvMatch);
+        Button btnHistorique = (Button)view.findViewById(R.id.btnHistorique);
 
         nvMatchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.fragment_container, new NouveauMatch());
+                fr.commit();
+            }
+        });
+
+        btnHistorique.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_container, new Historique());
                 fr.commit();
             }
         });
