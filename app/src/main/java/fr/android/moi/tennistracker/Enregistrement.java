@@ -1,23 +1,30 @@
 package fr.android.moi.tennistracker;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -106,6 +113,10 @@ public class Enregistrement extends Fragment {
     TextView locationTV;
     FusedLocationProviderClient fusedLocationProviderClient;
 
+    //Pictures
+    Button buttonPicture;
+    LinearLayout container_layout_images;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -158,6 +169,10 @@ public class Enregistrement extends Fragment {
                 }
             }
         });
+
+        //Picture
+        buttonPicture = view.findViewById(R.id.button_Picture);
+        container_layout_images = view.findViewById(R.id.container_layout_images);
 
         //Changing name player1, nameplayer2, person who serves first with the bundle
         joueur1Name.setText(bundle.getString("j1Text"));
@@ -581,6 +596,46 @@ public class Enregistrement extends Fragment {
                 }
             }
         });
+
+        //Prendre des photos bouttons
+        buttonPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Si il n'a pas la permission de la camera
+                if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
+                    //On la lui demande
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{
+                            Manifest.permission.CAMERA
+                    }, 100);
+                }
+                //Il a la permission
+                else
+                {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 100);
+                }
+            }
+        });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == 100)
+        {
+            //Get capture image
+            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+            //Set capture image
+            ImageView imageView = new ImageView(getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    600,
+                    600
+            );
+            params.setMargins(0,20,0,0);
+            imageView.setLayoutParams(params);
+            imageView.setImageBitmap(captureImage);
+
+            container_layout_images.addView(imageView);
+        }
+    }
 }
