@@ -31,6 +31,26 @@
                 android:gravity="center"
                 />
 
+            <LinearLayout
+                android:id="@+id/container_matchs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/resumer_match"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/viewDataButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/voir_historique" />
+
             <Button
                 android:id="@+id/buttonRetourMainMenu"
                 android:layout_width="match_parent"

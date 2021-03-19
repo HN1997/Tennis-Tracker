@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -57,6 +58,8 @@ public class Enregistrement extends Fragment {
     Button fauteProvoqueeJ2;
     Button fauteDirecteJ2;
     Button buttonLocation;
+    Button saveExitButton;
+    Button back_to_main_menu;
 
     //Statistiques J1 //
 
@@ -117,6 +120,9 @@ public class Enregistrement extends Fragment {
     Button buttonPicture;
     LinearLayout container_layout_images;
 
+    // Database
+    DatabaseHelper databaseHelper;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -154,6 +160,8 @@ public class Enregistrement extends Fragment {
         pointGagnantJ2 = view.findViewById(R.id.pointGagnantJ2);
         fauteProvoqueeJ2 = view.findViewById(R.id.fauteProvoqueeJ2);
         fauteDirecteJ2 = view.findViewById(R.id.fauteDirecteJ2);
+        saveExitButton = view.findViewById(R.id.saveExitButton);
+        back_to_main_menu = view.findViewById(R.id.back_to_main_menu);
 
         //Location
         buttonLocation = view.findViewById(R.id.button_location);
@@ -196,6 +204,9 @@ public class Enregistrement extends Fragment {
         //Vainqueur des sets (1 pour joueur 1, 2 pour joueur 2)
         vainqueurSet1 = vainqueurSet2 = vainqueurSet3 = 0;
 
+        //Database
+        databaseHelper = new DatabaseHelper(getContext());
+
         //Image de la balle de tennis
         if (joueur1isServing) {
             joueur1Name.setCompoundDrawablesWithIntrinsicBounds(R.drawable.tennis_ball, 0, 0, 0); //ajout de l'image de la balle de tennis au j1
@@ -205,6 +216,7 @@ public class Enregistrement extends Fragment {
             serveurTitle.setText("Serveur : " + joueur2Name.getText());
         }
 
+        //Listeners des bouttons
         premiereOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,7 +310,79 @@ public class Enregistrement extends Fragment {
             }
         });
 
+        saveExitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String pointActuelIntJ1s = String.valueOf(pointActuelIntJ1);
+                String pointSet1J1s = String.valueOf(pointSet1J1);
+                String pointSet2J1s = String.valueOf(pointSet2J1);
+                String pointSet3J1s = String.valueOf(pointSet3J1);
+                String nbr1ereOkJ1s = String.valueOf(nbr1ereOkJ1);
+                String nbr2emeOkJ1s = String.valueOf(nbr2emeOkJ1);
+                String nbr1AceJ1s = String.valueOf(nbr1AceJ1);
+                String nbr2AceJ1s = String.valueOf(nbr2AceJ1);
+                String nbrDoubleFauteJ1s = String.valueOf(nbrDoubleFauteJ1);
+                String nbrPointGagnantJ1s = String.valueOf(nbrPointGagnantJ1);
+                String nbrFauteProvoqueeJ1s = String.valueOf(nbrFauteProvoqueeJ1);
+                String nbrFauteDirectJ1s = String.valueOf(nbrFauteDirectJ1);
+
+                String pointActuelIntJ2s = String.valueOf(pointActuelIntJ2);
+                String pointSet1J2s = String.valueOf(pointSet1J2);
+                String pointSet2J2s = String.valueOf(pointSet2J2);
+                String pointSet3J2s = String.valueOf(pointSet3J2);
+                String nbr1ereOkJ2s = String.valueOf(nbr1ereOkJ2);
+                String nbr2emeOkJ2s = String.valueOf(nbr2emeOkJ2);
+                String nbr1AceJ2s = String.valueOf(nbr1AceJ2);
+                String nbr2AceJ2s = String.valueOf(nbr2AceJ2);
+                String nbrDoubleFauteJ2s = String.valueOf(nbrDoubleFauteJ2);
+                String nbrPointGagnantJ2s = String.valueOf(nbrPointGagnantJ2);
+                String nbrFauteProvoqueeJ2s = String.valueOf(nbrFauteProvoqueeJ2);
+                String nbrFauteDirectJ2s = String.valueOf(nbrFauteDirectJ2);
+
+                String locationTVs = locationTV.getText().toString();
+
+                addData(pointActuelIntJ1s, pointSet1J1s, pointSet2J1s,pointSet3J1s,nbr1ereOkJ1s, nbr2emeOkJ1s, nbr1AceJ1s,
+                        nbr2AceJ1s, nbrDoubleFauteJ1s, nbrPointGagnantJ1s, nbrFauteProvoqueeJ1s, nbrFauteDirectJ1s,
+                        pointActuelIntJ2s, pointSet1J2s, pointSet2J2s, pointSet3J2s, nbr1ereOkJ2s, nbr2emeOkJ2s,
+                        nbr1AceJ2s, nbr2AceJ2s, nbrDoubleFauteJ2s, nbrPointGagnantJ2s, nbrFauteProvoqueeJ2s, nbrFauteDirectJ2s,
+                        locationTVs);
+
+                finDuMatch = true;
+                saveExitButton.setEnabled(false);
+                buttonLocation.setEnabled(false);
+                buttonPicture.setEnabled(false);
+            }
+        });
+
+        back_to_main_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_container, new MainPage());
+                fr.commit();
+            }
+        });
+
         return view;
+    }
+
+    public void addData(String pointActuelIntJ1, String pointSet1J1, String pointSet2J1, String pointSet3J1,
+                        String nbr1ereOkJ1, String nbr2emeOkJ1, String nbr1AceJ1, String nbr2AceJ1,
+                        String nbrDoubleFauteJ1, String nbrPointGagnantJ1, String nbrFauteProvoqueeJ1, String nbrFauteDirectJ1,
+                        String pointActuelIntJ2, String pointSet1J2, String pointSet2J2, String pointSet3J2,
+                        String nbr1ereOkJ2, String nbr2emeOkJ2, String nbr1AceJ2, String nbr2AceJ2,
+                        String nbrDoubleFauteJ2, String nbrPointGagnantJ2, String nbrFauteProvoqueeJ2, String nbrFauteDirectJ2,
+                        String locationMatch)
+    {
+        boolean insertData = databaseHelper.addData(pointActuelIntJ1, pointSet1J1, pointSet2J1, pointSet3J1, nbr1ereOkJ1, nbr2emeOkJ1,
+                nbr1AceJ1, nbr2AceJ1, nbrDoubleFauteJ1, nbrPointGagnantJ1, nbrFauteProvoqueeJ1, nbrFauteDirectJ1, pointActuelIntJ2,
+                pointSet1J2, pointSet2J2, pointSet3J2, nbr1ereOkJ2, nbr2emeOkJ2, nbr1AceJ2, nbr2AceJ2, nbrDoubleFauteJ2,
+                nbrPointGagnantJ2, nbrFauteProvoqueeJ2, nbrFauteDirectJ2, locationMatch, joueur1Name.getText().toString(), joueur2Name.getText().toString());
+
+        if(insertData)
+            Toast.makeText(getActivity(), "Enregistrement du match !", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(getActivity(), "Une erreur s'est produite...", Toast.LENGTH_LONG).show();
     }
 
     public void ajoutPoint(boolean joueur1IsMarking, boolean isAce, boolean aceFirst) {
