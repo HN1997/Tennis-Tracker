@@ -116,7 +116,6 @@ public class Historique extends Fragment {
             stringBuilder.append("  % Faute provoquee: " + 0 + "\n");
             stringBuilder.append("  % Faute directe: " + 0 + "\n");
             stringBuilder.append("Joueur : " + cursor.getColumnName(27) + "\n");
-            stringBuilder.append("Joueur : " + cursor.getColumnName(26) + "\n");
             stringBuilder.append("  % Ace 1er service: " + 0 + "\n");
             stringBuilder.append("  % Ace 2eme service: " +  0+ "\n");
             stringBuilder.append("  % Reussite 1er service: " + 0 + "\n");
