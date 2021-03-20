@@ -34,4 +34,8 @@
     <string name="enregistrer_et_quitter">Save and Exit</string>
     <string name="recuperer_position">Position</string>
     <string name="prendre_une_photo">Photo</string>
+    <string name="historique">History</string>
+    <string name="retour_au_menu">Back to Menu</string>
+    <string name="voir_historique">See History</string>
+    <string name="supprimer_historique">Delete History</string>
 </resources>
