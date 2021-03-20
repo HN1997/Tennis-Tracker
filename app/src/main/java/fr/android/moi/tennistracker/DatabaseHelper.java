@@ -5,7 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.util.Log;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -44,6 +48,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL27="pseudoJun";
     private static final String COL28="pseudoJdeux";
 
+    private static final String COL29="image1";
+    private static final String COL30="image2";
+    private static final String COL31="image3";
+    private static final String COL32="image4";
+    private static final String COL33="image5";
+
     public DatabaseHelper(Context context)
     {
         super(context, TABLE_NAME, null, 1);
@@ -77,7 +87,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL25+ " TEXT, " +
                 COL26+ " TEXT, " +
                 COL27+ " TEXT, " +
-                COL28+ " TEXT)";
+                COL28+ " TEXT, " +
+                COL29+ " BLOB, " +
+                COL30+ " BLOB, " +
+                COL31+ " BLOB, " +
+                COL32+ " BLOB, " +
+                COL33+ " BLOB)";
         db.execSQL(createTable);
     }
 
@@ -92,8 +107,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                            String pointActuelIntJ2, String pointSet1J2, String pointSet2J2, String pointSet3J2,
                            String nbr1ereOkJ2, String nbr2emeOkJ2, String nbr1AceJ2, String nbr2AceJ2,
                            String nbrDoubleFauteJ2, String nbrPointGagnantJ2, String nbrFauteProvoqueeJ2, String nbrFauteDirectJ2,
-                           String locationMatch, String pseudoJun, String pseudoJdeux)
+                           String locationMatch, String pseudoJun, String pseudoJdeux, ArrayList<Bitmap> bitmapArray)
     {
+        byte[] img1 = new byte[0];
+        byte[] img2  = new byte[0];
+        byte[] img3 = new byte[0];
+        byte[] img4 = new byte[0];
+        byte[] img5 = new byte[0];
+
+        for(int i = 0; i<bitmapArray.size(); i++)
+        {
+            Bitmap b = bitmapArray.get(i);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            b.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            switch (i)
+            {
+                case 0:
+                    img1 = bos.toByteArray();
+                    break;
+                case 1:
+                    img2 = bos.toByteArray();
+                    break;
+                case 2:
+                    img3 = bos.toByteArray();
+                    break;
+                case 3:
+                    img4 = bos.toByteArray();
+                    break;
+                case 4:
+                    img5 = bos.toByteArray();
+                    break;
+            }
+        }
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, pointActuelIntJ1);
@@ -123,6 +169,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL26, locationMatch);
         contentValues.put(COL27, pseudoJun);
         contentValues.put(COL28, pseudoJdeux);
+        contentValues.put(COL29, img1);
+        contentValues.put(COL30, img2);
+        contentValues.put(COL31, img3);
+        contentValues.put(COL32, img4);
+        contentValues.put(COL33, img5);
+
 
         Log.i(TAG, "addData: Adding some data to " + TABLE_NAME);
         long result = db.insert(TABLE_NAME, null, contentValues);

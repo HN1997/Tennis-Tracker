@@ -2,6 +2,7 @@ package fr.android.moi.tennistracker;
 
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -14,7 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -104,6 +107,11 @@ public class Historique extends Fragment {
             int nbrPointGagnantJ2 = Integer.parseInt(cursor.getString(22)); //Il a remporté le point
             int nbrFauteProvoqueeJ2 = Integer.parseInt(cursor.getString(23)); //Il n'a pas remporté le point et a fait une faute provoquée
             int nbrFauteDirectJ2 = Integer.parseInt(cursor.getString(24)); //Il n'a pas remporté le point et a fait une faute directe
+            byte[] img1 = cursor.getBlob(28);
+            byte[] img2 = cursor.getBlob(29);
+            byte[] img3 = cursor.getBlob(30);
+            byte[] img4 = cursor.getBlob(31);
+            byte[] img5 = cursor.getBlob(32);
 
             stringBuilder.append("Statistiques du match numéro  " + numeroMatch + "\n");
             stringBuilder.append("Joueur : " + cursor.getColumnName(26) + "\n");
@@ -128,6 +136,20 @@ public class Historique extends Fragment {
 
             numeroMatch++;
             stringBuilder.append("\n");
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(img1, 0, img1.length);
+            ImageView img = new ImageView(getContext());
+            img.setImageBitmap(bitmap);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    600,
+                    600
+            );
+            img.setLayoutParams(params);
+
+            if(img.getParent() != null) {
+                ((ViewGroup)img.getParent()).removeView(img); // <- fix
+            }
+            containerMatch.addView(img);
         }
         resumer_match.setText(stringBuilder);
     }

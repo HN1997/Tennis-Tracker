@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -119,6 +120,7 @@ public class Enregistrement extends Fragment {
     //Pictures
     Button buttonPicture;
     LinearLayout container_layout_images;
+    ArrayList<Bitmap> bitmapArray;
 
     // Database
     DatabaseHelper databaseHelper;
@@ -181,6 +183,7 @@ public class Enregistrement extends Fragment {
         //Picture
         buttonPicture = view.findViewById(R.id.button_Picture);
         container_layout_images = view.findViewById(R.id.container_layout_images);
+        bitmapArray = new ArrayList<Bitmap>();
 
         //Changing name player1, nameplayer2, person who serves first with the bundle
         joueur1Name.setText(bundle.getString("j1Text"));
@@ -377,7 +380,8 @@ public class Enregistrement extends Fragment {
         boolean insertData = databaseHelper.addData(pointActuelIntJ1, pointSet1J1, pointSet2J1, pointSet3J1, nbr1ereOkJ1, nbr2emeOkJ1,
                 nbr1AceJ1, nbr2AceJ1, nbrDoubleFauteJ1, nbrPointGagnantJ1, nbrFauteProvoqueeJ1, nbrFauteDirectJ1, pointActuelIntJ2,
                 pointSet1J2, pointSet2J2, pointSet3J2, nbr1ereOkJ2, nbr2emeOkJ2, nbr1AceJ2, nbr2AceJ2, nbrDoubleFauteJ2,
-                nbrPointGagnantJ2, nbrFauteProvoqueeJ2, nbrFauteDirectJ2, locationMatch, joueur1Name.getText().toString(), joueur2Name.getText().toString());
+                nbrPointGagnantJ2, nbrFauteProvoqueeJ2, nbrFauteDirectJ2, locationMatch, joueur1Name.getText().toString(), joueur2Name.getText().toString(),
+                bitmapArray);
 
         if(insertData)
             Toast.makeText(getActivity(), "Enregistrement du match !", Toast.LENGTH_LONG).show();
@@ -718,6 +722,7 @@ public class Enregistrement extends Fragment {
             params.setMargins(0,20,0,0);
             imageView.setLayoutParams(params);
             imageView.setImageBitmap(captureImage);
+            bitmapArray.add(captureImage);
 
             container_layout_images.addView(imageView);
         }
