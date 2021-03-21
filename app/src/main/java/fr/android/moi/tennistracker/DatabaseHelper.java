@@ -98,7 +98,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //On supprime la table et on la recréé
+        //comme ça lorsque la version change les id repartent de 0
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
     }
 
     public boolean addData(String pointActuelIntJ1, String pointSet1J1, String pointSet2J1, String pointSet3J1,
