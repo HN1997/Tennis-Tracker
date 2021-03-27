@@ -220,6 +220,28 @@ public class Enregistrement extends Fragment {
         }
 
         //Listeners des bouttons
+
+        //Prendre des photos bouttons
+        buttonPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Si il n'a pas la permission de la camera
+                if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
+                    //On la lui demande
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{
+                            Manifest.permission.CAMERA
+                    }, 100);
+                }
+                //Il a la permission
+                else
+                {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 100);
+                }
+            }
+        });
+
         premiereOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -643,8 +665,10 @@ public class Enregistrement extends Fragment {
         }
     }
 
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    private void getLocation()
+    {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -681,27 +705,6 @@ public class Enregistrement extends Fragment {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-            }
-        });
-
-        //Prendre des photos bouttons
-        buttonPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Si il n'a pas la permission de la camera
-                if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-                {
-                    //On la lui demande
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{
-                            Manifest.permission.CAMERA
-                    }, 100);
-                }
-                //Il a la permission
-                else
-                {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, 100);
                 }
             }
         });

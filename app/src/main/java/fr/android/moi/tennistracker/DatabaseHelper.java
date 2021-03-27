@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -184,7 +185,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(result == -1)
             return false;
         else
+        {
+            //Si on a bien insert la valeure, on cherche mtn a garder uniquement les 5 derniers matchs enregistrés
+            keepFiveLastRows();
             return true;
+        }
+    }
+
+    //Fonction qui garde uniquement les 5 derniers matchs dans la bdd
+    public void keepFiveLastRows()
+    {
+        //On selectionne toutes les lignes de la table
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("select "+COL1+" from " + TABLE_NAME, null);
+        ArrayList<Integer> listID = new ArrayList<>(); //Toutes les id
+        ArrayList<Integer> listIDToDelete = new ArrayList<>(); //Les id a supprimer
+
+        //On recupere toutes les id qu'on stock dans listID
+        while(cursor.moveToNext())
+        {
+            listID.add(cursor.getInt(0));
+        }
+
+        //Si la taille est supérieure à 5, on regarde lesquels on doit supprimer
+        if(listID.size()>5)
+        {
+            for(int i = 0; i<listID.size(); i++)
+            {
+                listIDToDelete.add(listID.get(i));
+
+                if(listID.size() - (i+1) == 5 )
+                {
+                    Log.i("test : ", String.valueOf(listIDToDelete.size()));
+                    break;
+                }
+            }
+
+            int resultQuery = 0;
+
+            //On a recupere la liste des id a supprimer, on peut maintenant les supprimer:
+            for(int i = 0; i<listIDToDelete.size(); i++)
+            {
+                SQLiteDatabase db = this.getWritableDatabase();
+                resultQuery = db.delete(TABLE_NAME, COL1 + "=" + listIDToDelete.get(i), null);
+                if(resultQuery == 1)
+                    Log.i("info suppression : ", "Ligne " + i + " bien supprimee.");
+            }
+        }
+
     }
 
     public Cursor ViewData()
