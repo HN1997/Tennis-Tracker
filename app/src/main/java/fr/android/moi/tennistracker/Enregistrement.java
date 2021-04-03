@@ -399,16 +399,12 @@ public class Enregistrement extends Fragment {
                         String nbrDoubleFauteJ2, String nbrPointGagnantJ2, String nbrFauteProvoqueeJ2, String nbrFauteDirectJ2,
                         String locationMatch)
     {
-        boolean insertData = databaseHelper.addData(pointActuelIntJ1, pointSet1J1, pointSet2J1, pointSet3J1, nbr1ereOkJ1, nbr2emeOkJ1,
+        BackgroundDatabase bd = new BackgroundDatabase(getContext(), getActivity());
+        bd.execute("add_info", pointActuelIntJ1, pointSet1J1, pointSet2J1, pointSet3J1, nbr1ereOkJ1, nbr2emeOkJ1,
                 nbr1AceJ1, nbr2AceJ1, nbrDoubleFauteJ1, nbrPointGagnantJ1, nbrFauteProvoqueeJ1, nbrFauteDirectJ1, pointActuelIntJ2,
                 pointSet1J2, pointSet2J2, pointSet3J2, nbr1ereOkJ2, nbr2emeOkJ2, nbr1AceJ2, nbr2AceJ2, nbrDoubleFauteJ2,
                 nbrPointGagnantJ2, nbrFauteProvoqueeJ2, nbrFauteDirectJ2, locationMatch, joueur1Name.getText().toString(), joueur2Name.getText().toString(),
                 bitmapArray);
-
-        if(insertData)
-            Toast.makeText(getActivity(), "Enregistrement du match !", Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(getActivity(), "Une erreur s'est produite...", Toast.LENGTH_LONG).show();
     }
 
     public void ajoutPoint(boolean joueur1IsMarking, boolean isAce, boolean aceFirst) {

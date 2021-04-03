@@ -10,7 +10,7 @@ import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -95,6 +95,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL32+ " BLOB, " +
                 COL33+ " BLOB)";
         db.execSQL(createTable);
+    }
+
+    public void testConnection()
+    {
+        Log.i("test", "test");
+
     }
 
     @Override
